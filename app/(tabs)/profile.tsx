@@ -1,21 +1,9 @@
-import { Text, View, StyleSheet } from "react-native";
-
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import styles from "../styles";
 export default function ProfileScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Profile Data</Text>
-    </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#25292e",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    color: "#fff",
-  },
-});

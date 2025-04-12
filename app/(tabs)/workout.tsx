@@ -10,9 +10,11 @@ import {
   Modal,
   Alert,
   Pressable,
+  SafeAreaView,
 } from "react-native";
 import exercises from "../../assets/exercises/exercises.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import styles from "../styles";
 
 export async function addWorkoutSplit(name: string) {
   try {
@@ -63,7 +65,7 @@ export default function WorkoutScreen() {
   };
 
   return (
-    <View style={{ paddingTop: 50 }}>
+    <SafeAreaView>
       <Text style={{ color: "#ffffff" }}>Workout-Splits</Text>
 
       <Modal
@@ -138,49 +140,6 @@ export default function WorkoutScreen() {
           )}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  container: {
-    backgroundColor: "#252626",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    height: 40,
-    padding: 5,
-    borderColor: "gray",
-    borderWidth: 1,
-    color: "#fff",
-  },
-  itemContainer: {
-    padding: 5,
-  },
-  text: {
-    color: "#fff",
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "#252626",
-    borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-  },
-  addButton: {
-    backgroundColor: "#2196F3",
-  },
-});
