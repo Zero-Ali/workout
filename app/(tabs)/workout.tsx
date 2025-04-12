@@ -1,37 +1,49 @@
-import { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, ScrollView, FlatList, Button, Modal, Alert, Pressable } from 'react-native';
-import exercises from '../../assets/exercises/exercises.json'; 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  FlatList,
+  Button,
+  Modal,
+  Alert,
+  Pressable,
+} from "react-native";
+import exercises from "../../assets/exercises/exercises.json";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function addWorkoutSplit(name: string) {
   try {
-    const existingSplitsJson = await AsyncStorage.getItem('workoutSplit');
-    const existingSplits = existingSplitsJson ? JSON.parse(existingSplitsJson) : [];
+    const existingSplitsJson = await AsyncStorage.getItem("workoutSplit");
+    const existingSplits = existingSplitsJson
+      ? JSON.parse(existingSplitsJson)
+      : [];
     const updatedSplits = [...existingSplits, name];
-    await AsyncStorage.setItem('workoutSplit', JSON.stringify(updatedSplits));
+    await AsyncStorage.setItem("workoutSplit", JSON.stringify(updatedSplits));
   } catch (error) {
-    console.error('Error saving workout split:', error);
+    console.error("Error saving workout split:", error);
   }
 }
 
 export async function getAllSplits() {
   try {
-    const item = await AsyncStorage.getItem('workoutSplit');
+    const item = await AsyncStorage.getItem("workoutSplit");
     return item ? JSON.parse(item) : [];
   } catch (error) {
-    console.error('Error loading workout split:', error);
+    console.error("Error loading workout split:", error);
     return [];
   }
 }
 
 export default function WorkoutScreen() {
-  const [text, setText] = useState('');
-  const [splitText, setSplitText] = useState('');
+  const [text, setText] = useState("");
+  const [splitText, setSplitText] = useState("");
   const [savedSplits, setSavedSplits] = useState<string[]>([]);
   const exerciseList = exercises;
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   useEffect(() => {
     async function loadSplits() {
       const splits = await getAllSplits();
@@ -46,20 +58,20 @@ export default function WorkoutScreen() {
     await addWorkoutSplit(splitText);
     const updatedSplits = await getAllSplits();
     setSavedSplits(updatedSplits);
-    setSplitText('');
+    setSplitText("");
     setModalVisible(false);
   };
 
   return (
     <View style={{ paddingTop: 50 }}>
-      <Text style={{color: '#ffffff'}}>Workout-Splits</Text>
+      <Text style={{ color: "#ffffff" }}>Workout-Splits</Text>
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
+          Alert.alert("Modal has been closed.");
           setModalVisible(false);
         }}
       >
@@ -71,11 +83,23 @@ export default function WorkoutScreen() {
               onChangeText={(newText) => setSplitText(newText)}
               value={splitText}
             />
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-              <Pressable style={[styles.button, styles.addButton]} onPress={handleAddSplit}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                padding: 10,
+              }}
+            >
+              <Pressable
+                style={[styles.button, styles.addButton]}
+                onPress={handleAddSplit}
+              >
                 <Text style={styles.text}>Save</Text>
               </Pressable>
-              <Pressable style={[styles.button, styles.addButton]} onPress={() => setModalVisible(false)}>
+              <Pressable
+                style={[styles.button, styles.addButton]}
+                onPress={() => setModalVisible(false)}
+              >
                 <Text style={styles.text}>Cancel</Text>
               </Pressable>
             </View>
@@ -83,7 +107,10 @@ export default function WorkoutScreen() {
         </View>
       </Modal>
 
-      <Pressable style={[styles.button, styles.addButton]} onPress={() => setModalVisible(true)}>
+      <Pressable
+        style={[styles.button, styles.addButton]}
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.text}>Add Workout-Splits</Text>
       </Pressable>
       <FlatList
@@ -101,7 +128,7 @@ export default function WorkoutScreen() {
       <View style={styles.container}>
         <FlatList
           data={exerciseList.filter((exercise) =>
-            exercise.names?.en?.toLowerCase().includes(text.toLowerCase())
+            exercise.names?.en?.toLowerCase().includes(text.toLowerCase()),
           )}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
@@ -118,27 +145,27 @@ export default function WorkoutScreen() {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
-    backgroundColor: '#252626',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#252626",
+    justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     height: 40,
     padding: 5,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
-    color: '#fff',
+    color: "#fff",
   },
   itemContainer: {
     padding: 5,
   },
   text: {
-    color: '#fff',
-  },  
+    color: "#fff",
+  },
   button: {
     borderRadius: 20,
     padding: 10,
@@ -146,14 +173,14 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: '#252626',
-    borderColor: '#fff',
+    backgroundColor: "#252626",
+    borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
 });

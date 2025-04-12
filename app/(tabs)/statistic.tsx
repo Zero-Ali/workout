@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from "react-native";
 
 export default function StatisticScreen() {
   return (
@@ -9,13 +9,13 @@ export default function StatisticScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#25292e',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    text: {
-      color: '#fff',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: "#25292e",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: "#fff",
+  },
+});
